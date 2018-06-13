@@ -1,0 +1,16 @@
+.wrapper {
+    padding-left: 300px;
+}
+
+.padding-left-text{
+    padding-left: 10px;
+}
+
+.content {
+    position: fixed;
+    top: 75px;
+    bottom: 75px;
+    left: 0;
+    right: 0;
+    overflow: auto;
+}
