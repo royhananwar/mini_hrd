@@ -1,0 +1,67 @@
+{% extends 'auth/base.html' %}
+
+{% block content %}
+<div class="row content">
+
+    <form action="/register" method="POST" class="col s6 offset-s3">
+        <h3>Register</h1>
+        <!-- hidden csrf -->
+        {{ form.hidden_tag() }}
+
+        {{ form.username.label }}
+        {{ form.username }}
+        {% for message in form.username.errors %}
+            <span>{{ message }}</span>
+        {% endfor %}
+        <br>
+
+        {{ form.password_hash.label }}
+        {{ form.password_hash }}
+
+        {{ form.password_confirm.label }}
+        {{ form.password_confirm }}
+        {% for message in form.password_confirm.errors %}
+            <span>{{ message }}</span>
+        {% endfor %}
+        <br>
+
+        {{ form.name.label }}
+        {{ form.name }}
+        {% for message in form.name.errors %}
+            <span>{{ message }}</span>
+        {% endfor %}
+        <br>
+
+        {{ form.email.label }}
+        {{ form.email }}
+        {% for message in form.email.errors %}
+            <span>{{ message }}</span>
+        {% endfor %}
+        <br>
+
+        {{ form.address.label }}
+        {{ form.address }}
+        {% for message in form.address.errors %}
+            <span>{{ message }}</span>
+        {% endfor %}
+        <br>
+        
+        <!-- radio button for gender -->
+        {% for g in form.gender %}
+        <p>
+            <label>
+                {{ g }}
+                <span>{{ g.label }}</span>
+            </label>
+        </p>
+        {% endfor %}
+        {% for message in form.gender.errors %}
+            <span>{{ message }}</span>
+        {% endfor %}
+        <br>
+
+        <button class="waves-effect waves-light btn">{{ form.submit }}</button>
+    </form>
+
+</div>
+{% endblock %}
