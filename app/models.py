@@ -31,7 +31,7 @@ class Employee(db.Model):
     name = db.Column(db.String(50), index=True, unique=True)
     email = db.Column(db.String(32), index=True, unique=True)
     address = db.Column(db.String(250))
-    gender = db.Column(db.String(1), index=True, unique=True)
+    gender = db.Column(db.String(1), index=True)
     division_id = db.Column(db.Integer, db.ForeignKey('divisions.id'))
     user = db.relationship('User', backref='employee', lazy='dynamic')
 

@@ -1,6 +1,6 @@
 from flask import render_template, abort, request, redirect, url_for, flash
 from sqlalchemy.exc import IntegrityError
-from flask_login import login_user, logout_user
+from flask_login import login_user, logout_user, login_required
 
 from . import auth
 from .forms import RegisterForm, LoginForm
@@ -66,6 +66,7 @@ def login():
     return render_template('auth/login.html', form=form, title='Login')
 
 @auth.route('/logout')
+@login_required
 def logout():
     '''
     Handle for user logout
