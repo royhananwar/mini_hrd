@@ -1,0 +1,71 @@
+{% extends 'base.html' %} 
+{% block headertitle %}
+<h1 class="m-0 text-dark">
+    Users
+    <button id="addEmployee" type="button" class="btn btn-default btn-sm" data-target="#modalAddEmployee">
+        <span class="fa fa-plus"></span> Add
+    </button>
+</h1>
+{% endblock %}
+
+{% block content %}
+<div class="col-md-12">
+    <div class="row">
+        <div class="col-md-1">
+            Number
+        </div>
+        <div class="col-md-3">
+            Name
+        </div>
+        <div class="col-md-2">
+            Gender
+        </div>
+        <div class="col-md-3">
+            Division
+        </div>
+        <div class="col-md-3">
+            Action
+        </div>
+    </div>
+    {% foreach user in users %}
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-1">
+                {{ loop.index }}
+            </div>
+            <div class="col-md-3">
+                {{ user.name }}
+            </div>
+            <div class="col-md-2">
+                {{ user.gender }}
+            </div>
+            <div class="col-md-3">
+                {{ user.division}}
+            </div>
+            <div class="col-md-3">
+                <div class="row">
+                    <div class="col-md-1">
+                        <button type="button" class="btn btn-default btn-sm detail-user" data-id="{{ user.id }}" data-target="#modalDetailUser">
+                            <span class="fa fa-info"></span> Detail
+                        </button>
+                    </div>
+                    <div class="col-md-1">
+                        <button type="button" class="btn btn-default btn-sm edit-user" data-id="{{ user.id }}" data-target="#modalEditUser">
+                            <span class="fa fa-edit"></span> Edit
+                        </button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-1">
+                        <button type="button" class="btn btn-default btn-sm delete-user" data-id="{{ user.id }}" data-name="{{ user.name }}" data-target="#modalDeleteUser">
+                            <span class="fa fa-minus"></span> Delete
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}

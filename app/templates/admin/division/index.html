@@ -1,0 +1,205 @@
+{% extends 'base.html' %} 
+{% block headertitle %}
+<h1 class="m-0 text-dark">
+    Division
+    <button id="addDivision" type="button" class="btn btn-default btn-sm" data-target="#modalAddDivision">
+        <span class="fa fa-plus"></span> Add
+    </button>
+</h1>
+{% endblock %}
+{% block content %}
+<div class="col-md-12">
+    <div class="row">
+        <div class="col-md-1">
+            <p>Number</p>
+        </div>
+        <div class="col-md-3">
+            <p>Name</p>
+        </div>
+        <div class="col-md-4">
+            <p>Note</p>
+        </div>
+        <div class="col-md-4">
+            <p>Action</p>
+        </div>
+    </div>
+    {% for division in divisions %}
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-1">
+                {{ loop.index }}
+            </div>
+            <div class="col-md-3">
+                {{ division.name }}
+            </div>
+            <div class="col-md-4">
+                {{ division.note }}
+            </div>
+            <div class="col-md-4">
+                <div class="row">
+                    <div class="col-md-2">
+                        <button type="button" class="btn btn-default btn-sm detail-division" data-id="{{ division.id }}" data-target="#modalDetailDivision">
+                            <span class="fa fa-info"></span> Detail
+                        </button>
+                    </div>
+                    <div class="col-md-2">
+                        <button type="button" class="btn btn-default btn-sm edit-division" data-id="{{ division.id }}" data-target="#modalEditDivision">
+                            <span class="fa fa-edit"></span> Edit
+                        </button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2">
+                        <button type="button" class="btn btn-default btn-sm delete-division" data-id="{{ division.id }}" data-name="{{ division.name }}" data-target="#modalDeleteDivision">
+                            <span class="fa fa-minus"></span> Delete
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<!-- Modal Add Division -->
+<div class="modal fade" id="modalAddDivision" tabindex="-1" role="dialog" aria-labelledby="modalAddDivision" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalAddDivisionLabel">Add New Division</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="formAdd" action="{{ url_for('admin.create_division')}}" method="post">
+
+                    <!-- {{ form.hidden_tag() }} -->
+
+                    <div class="form-group">
+                        {{ form.name.label }} {{ form.name(class_="form-control", placeholder="Input Division Name")}} 
+                        {% for message in form.name.error %}
+                        <span>{{ message }}</span>
+                        {% endfor %}
+                    </div>
+
+                    <div class="form-group">
+                        {{ form.note.label }} {{form.note(class_="form-control", placeholder="Input Division Note")}} 
+                        {% for message in form.note.error %}
+                        <span>{{ message }}</span>
+                        {% endfor %}
+                    </div>
+                    <button type="submit" class="btn btn-primary">Add New</button>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button> -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Detail Division -->
+<div class="modal fade" id="modalDetailDivision" tabindex="-1" role="dialog" aria-labelledby="modalDetailDivision" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalDetailDivisionLabel">Add New Division</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-3">
+                            <p>Name</p>
+                        </div>
+                        <div class="col-md-9">
+                            <p id="textDivisionName"></p>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="col-md-3">
+                            <p>Note</p>
+                        </div>
+                        <div class="col-md-9">
+                            <p id="textDivisionNote"></p>
+                        </div>
+                    </div>          
+                </div>
+            </div>
+            <div class="modal-footer">
+                <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
+            <button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Add Division -->
+<div class="modal fade" id="modalEditDivision" tabindex="-1" role="dialog" aria-labelledby="modalEditDivision" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalEditDivisionLabel">Edit Division</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="formEdit" action="{{ url_for('admin.edit_division', id=0) }}" method="post">
+
+                    <!-- {{ form.hidden_tag() }} -->
+
+                    <div class="form-group">
+                        {{ form.name.label }} {{ form.name(class_="form-control edit-division-name", placeholder="Input Division Name")}} 
+                        {% for message in form.name.error %}
+                        <span>{{ message }}</span>
+                        {% endfor %}
+                    </div>
+
+                    <div class="form-group">
+                        {{ form.note.label }} {{form.note(class_="form-control edit-division-note", placeholder="Input Division Note")}} 
+                        {% for message in form.note.error %}
+                        <span>{{ message }}</span>
+                        {% endfor %}
+                    </div>
+                    <button type="submit" class="btn btn-primary">Edit</button>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button> -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Delete -->
+<div class="modal fade" id="modalDeleteDivision" tabindex="-1" role="dialog" aria-labelledby="modalDeleteDivisionLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="modalDeleteDivisionLabel">Delete Division</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <form id="formDelete" action="{{ url_for('admin.delete_division', id=0) }}" method="post"></form>
+            <div class="modal-body">
+                    <p id="textDelete"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-warning">Delete</button>
+            </div>
+        </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
